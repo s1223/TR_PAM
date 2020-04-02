@@ -13,13 +13,13 @@ public class ImagesAdapter extends BaseAdapter{
     private Context mContext;
     int imageTotal = 7;
     public static String[] mThumbIds = {
-            "http://192.168.1.20/android/1.jpg",
-            "http://192.168.1.20/android/2.jpg",
-            "http://192.168.1.20/android/3.jpg",
-            "http://192.168.1.20/android/4.jpg",
-            "http://192.168.1.20/android/5.jpg",
-            "http://192.168.1.20/android/6.jpg",
-            "http://192.168.1.20/android/7.jpg",
+            "http://192.168.31.66/GambarTRPAM/1.jpg",
+            "http://192.168.31.66/GambarTRPAM/2.jpg",
+            "http://192.168.31.66/GambarTRPAM/3.jpg",
+            "http://192.168.31.66/GambarTRPAM/4.jpg",
+            "http://192.168.31.66/GambarTRPAM/5.jpg",
+            "http://192.168.31.66/GambarTRPAM/6.jpg",
+            "http://192.168.31.66/GambarTRPAM/7.jpg",
     };
 
     public ImagesAdapter(Context c) {
