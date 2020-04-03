@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">PAM_TR</string>
+    <string name="title_activity_lokasi_wisata">Map</string>
 </resources>
