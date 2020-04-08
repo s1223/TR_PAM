@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "128283547401",
+    "firebase_url": "https://tr-pam-ebfef.firebaseio.com",
+    "project_id": "tr-pam-ebfef",
+    "storage_bucket": "tr-pam-ebfef.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:128283547401:android:e531671e9407c0ef5f25d8",
+        "android_client_info": {
+          "package_name": "com.fianjulio.pam_tr"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "128283547401-am1gtuek7ib3465ks81n5flhlj77aa7c.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAY4y9-r_HWPL7phf6iPFku5NmJkyqyFnU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "128283547401-am1gtuek7ib3465ks81n5flhlj77aa7c.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
