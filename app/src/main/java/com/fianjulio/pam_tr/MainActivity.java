@@ -10,10 +10,19 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.GridView;
 import android.widget.Toast;
+
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
+import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -22,8 +31,43 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
 
+        // Write a message to the database
+        final FirebaseDatabase[] database = {FirebaseDatabase.getInstance()};
+        DatabaseReference myRef = database[0].getReference("data");
+
+        //myRef.setValue("Hello, World!");
+
+        // Read from the database
+        myRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                singletone obj = singletone.getInstance();
+                ArrayList<String> a = obj.getData_gambar();
+                for (DataSnapshot ds : dataSnapshot.getChildren()){
+                    String img = ds.child("img").getValue().toString();
+                    a.add(img);
+                    Log.d("firebases3",img);
+                }
+                obj.setData_gambar(a);
+                if (obj.getData_gambar().size() == 40){
+                    Log.d("status","lengkap");
+                    tampilan();
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError error) {
+                // Failed to read value
+                Log.w("firebases0", "Failed to read value.", error.toException());
+            }
+        });
+
+
+    }
+
+    public void tampilan(){
+        setContentView(R.layout.activity_main);
 
         final GridView gridview = (GridView) findViewById(R.id.gridv);
 

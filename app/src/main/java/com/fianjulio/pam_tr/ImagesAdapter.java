@@ -1,14 +1,8 @@
 package com.fianjulio.pam_tr;
 
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
 
 import android.content.Context;
-import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
@@ -16,23 +10,23 @@ import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-public class ImagesAdapter<i> extends BaseAdapter{
+import java.util.ArrayList;
+
+public class ImagesAdapter extends BaseAdapter{
     private Context mContext;
-    int imageTotal = 40;
-
-
-    firebase fb = new firebase();
-
-    String[] mThumbIds = new String[40];
-
-    public void gbr(){
-        for(int i = 0; i< 40;i++){
-            mThumbIds[i] = fb.data_gambar(String.valueOf(i+1));
-        }
-        Log.d("tesimg", "Value is: " + mThumbIds[2]);
-        Log.d("tesimg", "imgadapter");
-    }
-
+    singletone obj = singletone.getInstance();
+    ArrayList<String> mThumbIds = obj.getData_gambar();
+    int imageTotal = mThumbIds.size();
+//    int imageTotal = 7;
+//    public static String[] mThumbIds = {
+//            "https://png.clipart.me/istock/previews/3895/38953970-france-national-flag-square-button-isolated-on-white-background.jpg",
+//            "https://images.freeimages.com/images/premium/large-thumbs/4616/46163316-denmark-flag-square-glossy-button.jpg",
+//            "https://fastly.4sqi.net/img/general/200x200/35684184_UbuzxuKzsCzDRzDNseU1HPc3VlFyrS4AJC9cZtSkxJg.jpg",
+//            "https://images.freeimages.com/images/premium/large-thumbs/4621/46210652-namibia-flag-square-glossy-button.jpg",
+//            "https://png.clipart.me/istock/previews/4620/46206954-malaysia-flag-square-glossy-button.jpg",
+//            "https://fastly.4sqi.net/img/general/200x200/6534561_UZ6fkjMYQXUFf9ZFdAZyl_vq6dh4XTfHigkYRr-rM_k.jpg",
+//            "https://ecs7.tokopedia.net/img/cache/200-square/product-1/2015/8/24/74044/74044_d2370465-56df-41cc-9f1b-7a963f179522.jpg",
+//    };
 
 
     public ImagesAdapter(Context c) {
@@ -46,9 +40,7 @@ public class ImagesAdapter<i> extends BaseAdapter{
 
     @Override
     public Object getItem(int position) {
-        gbr();
-        Log.d("tesk", "tesk");
-        return mThumbIds[position];
+        return mThumbIds.get(position);
     }
 
     @Override
