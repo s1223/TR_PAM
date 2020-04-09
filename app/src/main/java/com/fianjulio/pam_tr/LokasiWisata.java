@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -19,6 +20,11 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 public class LokasiWisata extends FragmentActivity implements OnMapReadyCallback {
 
@@ -30,6 +36,7 @@ public class LokasiWisata extends FragmentActivity implements OnMapReadyCallback
     private String NamaTempat = "";
     private String NoHP = "";
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -39,6 +46,7 @@ public class LokasiWisata extends FragmentActivity implements OnMapReadyCallback
         txtNamaLokasi = findViewById(R.id.NamaLokasi);
         Intent a = getIntent();
         int id = a.getExtras().getInt("id");
+
         switch (id){
             case 0:
                 lat = "-7.3219544";
@@ -52,6 +60,7 @@ public class LokasiWisata extends FragmentActivity implements OnMapReadyCallback
                 NamaTempat = "Selasar Kartini";
                 NoHP = "082136815488";
                 break;
+
         }
 
         txtNamaLokasi.setText(NamaTempat);
