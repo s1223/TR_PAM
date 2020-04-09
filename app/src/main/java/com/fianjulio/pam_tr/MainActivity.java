@@ -46,7 +46,9 @@ public class MainActivity extends AppCompatActivity {
                 ArrayList<String> a = obj.getData_gambar();
                 for (DataSnapshot ds : dataSnapshot.getChildren()){
                     String img = ds.child("img").getValue().toString();
-                    a.add(img);
+                    if (!a.contains(img)){
+                        a.add(img);
+                    }
                     Log.d("firebases3",img);
                 }
                 obj.setData_gambar(a);
