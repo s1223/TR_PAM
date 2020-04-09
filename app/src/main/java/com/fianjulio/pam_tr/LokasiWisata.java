@@ -26,11 +26,14 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.util.ArrayList;
+
 public class LokasiWisata extends FragmentActivity implements OnMapReadyCallback {
 
     private GoogleMap mMap;
     private Button Bcall, BGMaps;
     private TextView txtNamaLokasi;
+
     private String lat = "";
     private String longi = "";
     private String NamaTempat = "";
@@ -40,28 +43,21 @@ public class LokasiWisata extends FragmentActivity implements OnMapReadyCallback
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        get_lat_from_FB();
+    }
+
+    public void tampilan(){
         setContentView(R.layout.activity_lokasi_wisata);
         Bcall = findViewById(R.id.btn_telp);
         BGMaps = findViewById(R.id.btn_nav);
         txtNamaLokasi = findViewById(R.id.NamaLokasi);
         Intent a = getIntent();
         int id = a.getExtras().getInt("id");
-
-        switch (id){
-            case 0:
-                lat = "-7.3219544";
-                longi = "110.4937747";
-                NamaTempat = "Warung Joglo Bu Rini";
-                NoHP = "082136815488";
-                break;
-            case 1:
-                lat = "-7.3264105";
-                longi = "110.5006747";
-                NamaTempat = "Selasar Kartini";
-                NoHP = "082136815488";
-                break;
-
-        }
+        singletone obj = singletone.getInstance();
+        lat = obj.getLat().get(id);
+        longi = obj.getLongi().get(id);
+        NamaTempat = obj.getNamaTempat().get(id);
+        NoHP = obj.getNoHP().get(id);
 
         txtNamaLokasi.setText(NamaTempat);
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
@@ -89,6 +85,71 @@ public class LokasiWisata extends FragmentActivity implements OnMapReadyCallback
                     return;
                 }
                 startActivity(callIntent);
+            }
+        });
+    }
+
+    public void get_lat_from_FB(){
+        // Write a message to the database
+        final FirebaseDatabase[] database = {FirebaseDatabase.getInstance()};
+        DatabaseReference myRef = database[0].getReference("data");
+
+        //myRef.setValue("Hello, World!");
+
+        // Read from the database
+        myRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                singletone obj = singletone.getInstance();
+                ArrayList<String> lat = obj.getLat();
+                ArrayList<String> longi = obj.getLongi();
+                ArrayList<String> NamaTempat = obj.getNamaTempat();
+                ArrayList<String> NoHP = obj.getNoHP();
+                int ssss = 1;
+                for (DataSnapshot ds : dataSnapshot.getChildren()){
+                    String latitude = ds.child("latitude").getValue().toString();
+                    String longitude = ds.child("longitude").getValue().toString();
+                    String namaWisata = ds.child("namaWisata").getValue().toString();
+                    String noHp = ds.child("noHp").getValue().toString();
+                    if (!lat.contains(latitude)){
+                        lat.add(latitude);
+                    }else {
+                        Log.d("status","latitude data ke "+ssss+" ada yang double");
+                    }
+                    if (!longi.contains(longitude)){
+                        longi.add(longitude);
+                    }else {
+                        Log.d("status","longitude data ke "+ssss+" ada yang double");
+                    }
+                    if (!NamaTempat.contains(namaWisata)){
+                        NamaTempat.add(namaWisata);
+                    }else {
+                        Log.d("status","namaWisata data ke "+ssss+" ada yang double");
+                    }
+                    if (!NoHP.contains(noHp)){
+                        NoHP.add(noHp);
+                    }else{
+                        Log.d("status","NO HP data ke "+ssss+" ada yang double");
+                    }
+                    Log.d("status","masih ambil data ke "+ssss);
+                    ssss += 1;
+                }
+                Log.d("status","dah selesai ambil data");
+                obj.setLat(lat);
+                obj.setLongi(longi);
+                obj.setNamaTempat(NamaTempat);
+                obj.setNoHP(NoHP);
+                Log.d("status","obj.getNoHP().size() = "+String.valueOf(obj.getNoHP().size()));
+                if (obj.getNoHP().size() == 40){
+                    Log.d("status","menampilkan tampilan");
+                    tampilan();
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError error) {
+                // Failed to read value
+                Log.w("firebases0", "Failed to read value.", error.toException());
             }
         });
     }
