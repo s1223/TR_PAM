@@ -19,7 +19,7 @@ public class firebase extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_firebase);
 
-        data_gambar("2");
+        data_gambar("9");
 
     }
 
@@ -37,13 +37,13 @@ public class firebase extends AppCompatActivity {
                 // This method is called once with the initial value and again
                 // whenever data at this location is updated.
                 String value = dataSnapshot.getValue(String.class);
-                Log.d("firebasess", "Value is: " + value);
+                Log.d("firebases0", "Value is: " + value);
             }
 
             @Override
             public void onCancelled(DatabaseError error) {
                 // Failed to read value
-                Log.w("firebasess", "Failed to read value.", error.toException());
+                Log.w("firebases0", "Failed to read value.", error.toException());
             }
         });
     }
