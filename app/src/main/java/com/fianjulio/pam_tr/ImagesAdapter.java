@@ -23,6 +23,7 @@ public class ImagesAdapter extends BaseAdapter{
             "https://ecs7.tokopedia.net/img/cache/200-square/product-1/2015/8/24/74044/74044_d2370465-56df-41cc-9f1b-7a963f179522.jpg",
     };
 
+
     public ImagesAdapter(Context c) {
         mContext = c;
     }
