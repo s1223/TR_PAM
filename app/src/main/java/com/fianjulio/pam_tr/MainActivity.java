@@ -24,6 +24,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+
         final GridView gridview = (GridView) findViewById(R.id.gridv);
 
         gridview.setAdapter(new ImagesAdapter(this));

@@ -20,39 +20,19 @@ public class ImagesAdapter<i> extends BaseAdapter{
     private Context mContext;
     int imageTotal = 40;
 
+
+    firebase fb = new firebase();
+
     String[] mThumbIds = new String[40];
 
     public void gbr(){
         for(int i = 0; i< 40;i++){
-            mThumbIds[i] = data_gambar(String.valueOf(i));
+            mThumbIds[i] = fb.data_gambar(String.valueOf(i+1));
         }
+        Log.d("tesimg", "Value is: " + mThumbIds[2]);
+        Log.d("tesimg", "imgadapter");
     }
 
-    public String data_gambar(String indexnya){
-
-        FirebaseDatabase database = FirebaseDatabase.getInstance();
-        DatabaseReference myRef = database.getReference("data/"+indexnya+"/img");
-        //final String[] valued = new String[1];
-        //myRef.setValue("Hello, World!");
-        final String[] value = new String[1];
-
-        // Read from the database
-        myRef.addValueEventListener(new ValueEventListener() {
-
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                value[0] = dataSnapshot.getValue(String.class);
-                Log.d("firebasess", "Valuenya is: " + value[0]);
-            }
-
-            @Override
-            public void onCancelled(DatabaseError error) {
-                // Failed to read value
-                Log.w("firebasess", "Failed to read value.", error.toException());
-            }
-        });
-        return value[0];
-    }
 
 
     public ImagesAdapter(Context c) {
@@ -66,6 +46,8 @@ public class ImagesAdapter<i> extends BaseAdapter{
 
     @Override
     public Object getItem(int position) {
+        gbr();
+        Log.d("tesk", "tesk");
         return mThumbIds[position];
     }
 
