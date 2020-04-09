@@ -1,8 +1,14 @@
 package com.fianjulio.pam_tr;
 
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
@@ -10,18 +16,43 @@ import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-public class ImagesAdapter extends BaseAdapter{
+public class ImagesAdapter<i> extends BaseAdapter{
     private Context mContext;
-    int imageTotal = 7;
-    public static String[] mThumbIds = {
-            "https://png.clipart.me/istock/previews/3895/38953970-france-national-flag-square-button-isolated-on-white-background.jpg",
-            "https://images.freeimages.com/images/premium/large-thumbs/4616/46163316-denmark-flag-square-glossy-button.jpg",
-            "https://fastly.4sqi.net/img/general/200x200/35684184_UbuzxuKzsCzDRzDNseU1HPc3VlFyrS4AJC9cZtSkxJg.jpg",
-            "https://images.freeimages.com/images/premium/large-thumbs/4621/46210652-namibia-flag-square-glossy-button.jpg",
-            "https://png.clipart.me/istock/previews/4620/46206954-malaysia-flag-square-glossy-button.jpg",
-            "https://fastly.4sqi.net/img/general/200x200/6534561_UZ6fkjMYQXUFf9ZFdAZyl_vq6dh4XTfHigkYRr-rM_k.jpg",
-            "https://ecs7.tokopedia.net/img/cache/200-square/product-1/2015/8/24/74044/74044_d2370465-56df-41cc-9f1b-7a963f179522.jpg",
-    };
+    int imageTotal = 40;
+
+    String[] mThumbIds = new String[40];
+
+    public void gbr(){
+        for(int i = 0; i< 40;i++){
+            mThumbIds[i] = data_gambar(String.valueOf(i));
+        }
+    }
+
+    public String data_gambar(String indexnya){
+
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        DatabaseReference myRef = database.getReference("data/"+indexnya+"/img");
+        //final String[] valued = new String[1];
+        //myRef.setValue("Hello, World!");
+        final String[] value = new String[1];
+
+        // Read from the database
+        myRef.addValueEventListener(new ValueEventListener() {
+
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                value[0] = dataSnapshot.getValue(String.class);
+                Log.d("firebasess", "Valuenya is: " + value[0]);
+            }
+
+            @Override
+            public void onCancelled(DatabaseError error) {
+                // Failed to read value
+                Log.w("firebasess", "Failed to read value.", error.toException());
+            }
+        });
+        return value[0];
+    }
 
 
     public ImagesAdapter(Context c) {
